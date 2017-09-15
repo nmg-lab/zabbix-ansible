@@ -1,0 +1,28 @@
+---
+- name: 安装依赖包
+  yum: name={{ item }} state=present
+  with_items:
+   - gcc
+   - gcc-c++
+   - make
+  tags: gcc
+
+- name: 安装Apache
+  yum: name=httpd state=present
+  tags: apache
+
+- name: 修改配置文件
+  shell: sed -e '96 aServerName {{ zabbix_server_name }}' -i /etc/httpd/conf/httpd.conf
+
+- name: 关闭安全策略
+  selinux:
+    state: disabled
+
+#- name: stopping firewall service
+#  service: name=firewalld state=stopped enabled=false 
+
+- name: restart httpd 
+  service: name=httpd  state=restarted enabled=yes
+  register: status
+  tags: restart httpd
+- debug: var=status

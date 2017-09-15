@@ -1,0 +1,21 @@
+---
+- name: 配置源（centos7）
+  yum: name={{ item }} state=present
+  with_items:
+   - https://mirror.webtatic.com/yum/el7/epel-release.rpm
+   - https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
+  tags: rpm
+
+- name: 安装
+  yum: name={{ item }} state=present
+  with_items:
+   - php-gd
+   - php-xml
+   - php-mbstring
+   - php-ldap
+   - php-pear
+   - php-xmlrpc
+   - php-fpm
+
+- name: 启动php-fpm服务
+  service: name=php-fpm state=started enabled=yes

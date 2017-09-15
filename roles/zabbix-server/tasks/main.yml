@@ -1,0 +1,40 @@
+---
+- name: 配置源
+  yum: name={{ item }} state=present
+  with_items:
+   - http://repo.zabbix.com/zabbix/3.4/rhel/7/x86_64/zabbix-release-3.4-1.el7.centos.noarch.rpm 
+
+- name: 安装zabbix-server
+  yum： name={{ item }} state=present
+  with_items:
+   - zabbix-server-mysql
+   - zabbix-web-mysql
+   - zabbix-agent
+
+
+- name: 创建数据库
+  mysql_db: 
+    name: zabbix
+    encoding: utf8
+    state: present
+
+- name: 授权
+  mysql_user:
+    name: zabbix
+    password: zabbix
+    priv: 'zabbix.*:ALL,GRANT'
+    state: present
+
+- name: 导入初始架构及数据
+  command: zcat create.sql.gz | mysql -uroot zabbix
+  args:
+    chdir: /usr/share/doc/zabbix-server-mysql-3.4.1
+
+- name: import database
+  mysql_db:
+    state: import
+    name: 
+
+
+
+

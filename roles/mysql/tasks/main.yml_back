@@ -1,0 +1,19 @@
+---
+- name: start installation of mariadb
+  yum: name={{ item }} state=present
+  become: True
+  with_items:
+   - mariadb
+   - mariadb-galera-server
+   - mariadb-galera-common
+   - galera
+   - rsync
+
+- name: copying mariadb server config
+  template: src=templates/mariadb-server.cnf.j2 dest=/etc/my.cnf.d/mariadb-server.cnf mode=0644
+  become: True
+
+- name: start service mariadb server
+  service: name=mariadb state=started enabled=yes
+  become: True
+
