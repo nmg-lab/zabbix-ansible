@@ -1,0 +1,23 @@
+---
+- name: copy 字体
+  copy:
+    src: /root/git/zabbix-ansible/word/simhei.ttf
+    dest: /usr/share/zabbix/fonts
+    owner: root
+    group: root
+    mode: 0644
+#    remote_src: yes
+  tags: word
+
+- name: update defines.inc.php
+  lineinfile:
+    dest: /usr/share/zabbix/include/defines.inc.php
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+  with_items:
+    - { regexp: "^define('ZBX_GRAPH_FONT_NAME',           'graphfont')",line: "define('ZBX_GRAPH_FONT_NAME',           'simhei');"}
+    - { regexp: "^define('ZBX_FONT_NAME', 'graphfont')",line: "define('ZBX_FONT_NAME', 'simhei');"}
+ 
+- name: restart httpd
+  service: name=httpd state=restarted 
+

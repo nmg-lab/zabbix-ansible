@@ -1,0 +1,21 @@
+---
+#单独安装agent
+- name: 配置源
+  yum: name={{ item }} state=present
+  with_items:
+   - http://repo.zabbix.com/zabbix/3.4/rhel/7/x86_64/zabbix-release-3.4-1.el7.centos.noarch.rpm 
+
+- name: 安装
+  yum: name={{ item }} state=present
+  with_items:
+   - zabbix-agent
+
+- name: copy zabbix-agentd配置文件
+  template: src=templates/zabbix_agentd.conf.j2 dest=/etc/zabbix/zabbix_agentd.conf owner=root group=root mode=0644
+
+
+- name: start agent
+  service: name=zabbix-agent state=restarted enabled=True
+
+
+  

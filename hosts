@@ -3,23 +3,13 @@
 10.12.15.197
 #################agentIP地址#################
 [agent]
-10.12.15.197
-#################webIP地址#################
-[web]
-10.12.15.197
-
-
-
+10.12.15.205
 #####################全局变量###################
 [all:vars]
 zabbix_server_name = zabbix
-
 main_ip = 10.12.15.197
+
+
 ansible_connection=ssh
 ansible_ssh_user=root
-ansible_ssh_pass="111111"
-
-#全部密码
-RABBIT_PASS=111111
-HAPROXY_PASS=admin
-
+ansible_ssh_pass='111111'
