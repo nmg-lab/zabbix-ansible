@@ -1,0 +1,11 @@
+- hosts: server
+  user: root
+  roles:
+    - sysctl
+    - mysql
+    - zabbix-server
+
+- hosts: agent
+  user: root
+  roles:
+    - zabbix-agent

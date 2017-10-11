@@ -1,0 +1,5 @@
+- name: "复制sysctl.conf"
+  template: src=templates/sysctl.conf.j2 dest=/etc/sysctl.conf owner=root group=root mode=0640
+
+- name : "sysctl -p"
+  command : sysctl -p
