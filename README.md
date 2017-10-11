@@ -1,2 +1,3 @@
-#zabbix-ansible
-zabbix-ansible
+
+安装
+#ansible-play install.yml

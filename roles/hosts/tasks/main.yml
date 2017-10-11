@@ -1,3 +1,0 @@
-- name : "生成/etc/hosts文件"
-  template: src=templates/hosts.j2 dest=/etc/hosts mode=0644
-  tags: hosts

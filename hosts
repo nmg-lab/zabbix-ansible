@@ -1,15 +1,16 @@
 ##############服务器IP地址#############
 [server]
-10.12.15.197
+192.168.0.15
+
 #################agentIP地址#################
 [agent]
-10.12.15.205
+192.168.0.12
+
 #####################全局变量###################
 [all:vars]
-zabbix_server_name = zabbix
-main_ip = 10.12.15.197
+zabbix_server_name = 192.168.0.15
 
-
+#通用服务器账户密码
 ansible_connection=ssh
 ansible_ssh_user=root
 ansible_ssh_pass='111111'

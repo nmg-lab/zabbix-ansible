@@ -1,3 +1,6 @@
+- name: 删除mysql历史文件
+  command: rm -rf /var/lib/mysql/
+
 - name: 安装单节点mariadb
   yum: name={{ item }} state=present
   with_items:

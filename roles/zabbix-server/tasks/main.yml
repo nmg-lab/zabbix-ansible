@@ -1,8 +1,14 @@
 ---
-- name: 配置源
+- name: copy zabbix.repo
+  template: src=templates/zabbix.repo.j2 dest=/etc/yum.repos.d/zabbix.repo owner=root group=root mode=0644
+
+- name: copy epel.repo
+  template: src=templates/epel-7.repo.j2 dest=/etc/yum.repos.d/epel-7.repo owner=root group=root mode=0644
+
+
+- name: install python-pip python-devel mysql-devel
   yum: name={{ item }} state=present
   with_items:
-   - http://repo.zabbix.com/zabbix/3.4/rhel/7/x86_64/zabbix-release-3.4-1.el7.centos.noarch.rpm 
    - python-pip
    - python-devel
    - mysql-devel
@@ -10,15 +16,17 @@
 - name: 安装zabbix-server
   yum: name={{ item }} state=present
   with_items:
-   - zabbix-server-mysql
-   - zabbix-web-mysql
-   - zabbix-agent
+   - zabbix-server-mysql-3.4.1
+   - zabbix-web-mysql-3.4.1
+   - zabbix-agent-3.4.1
+   - MySQL-python
 
-- name: 升级pip
-  command: pip install --upgrade pip
+#- name: 升级pip
+#  command: pip install --upgrade pip
 
-- name: Install the Python MySQLB module
-  pip: name=MySQL-python state=forcereinstall
+#- name: Install the Python MySQLB module
+#  yum: name=MySQL-python state=present
+#  pip: name=MySQL-python state=forcereinstall
 
 
 - name: 创建数据库
@@ -35,9 +43,10 @@
     state: present
 
 - name: 解压数据库文件
-  command: gzip create.sql.gz
+  command: gzip -dr create.sql.gz
   args:
     chdir: /usr/share/doc/zabbix-server-mysql-3.4.1
+  ignore_errors: yes
 
 - name: 导入数据结构
   mysql_db:
@@ -64,6 +73,9 @@
   with_items:
    - zabbix-server
    - zabbix-agent
+
+- name: setenforce 0
+  command: setenforce 0
 
 - name: resart httpd service
   service: name=httpd state=restarted enabled=yes
