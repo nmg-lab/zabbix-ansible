@@ -1,0 +1,13 @@
+---
+- name: installing snmp packages
+  yum: name={{ item }} state=present
+  with_items:
+     - net-snmp
+     - net-snmp-utils
+
+- name: copying snmpd.conf to agent node
+  template: src=templates/snmpd.conf dest=/etc/snmp/snmpd.conf owner=root group=root mode=0644
+
+- name: start snmp service
+  service: name=snmpd state=restarted enabled=yes
+

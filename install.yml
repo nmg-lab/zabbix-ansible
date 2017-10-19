@@ -1,6 +1,7 @@
 - hosts: server
   user: root
   roles:
+    - selinux
     - sysctl
     - mysql
     - zabbix-server
@@ -8,4 +9,4 @@
 - hosts: agent
   user: root
   roles:
-    - zabbix-agent
+    - snmp

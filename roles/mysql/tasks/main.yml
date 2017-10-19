@@ -10,6 +10,12 @@
 - name: copying config files
   template: src=templates/mariadb-server.cnf.j2 dest=/etc/my.cnf.d/mariadb-server.cnf owner=root group=root mode=0644
 
+- name: mkdir /var/lib/mysql
+  file: path=/var/lib/mysql state=directory owner=mysql group=mysql mode=0644
+  ignore_errors: yes
+
+
+
 - name : start mariadb
   service : name=mariadb state=restarted enabled=true
 

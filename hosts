@@ -1,19 +1,30 @@
 #################服务器 IP地址################
 [server]
-10.0.0.2
+10.12.16.161
+[zabbix]
+10.12.16.161
 
 ##############客户端agent IP地址##############
 [agent]
-10.0.0.3
-10.0.0.[20:30]
+#10.12.16.1[57:60]
+10.0.0.31
+10.0.0.32
+10.0.0.33
 
 ###################全局变量###################
 [all:vars]
 
 #zabbix服务器IP地址
-zabbix_server_name = 10.0.0.2
+zabbix_server_name = 10.12.16.161
+mysql_user_name=zabbix
+mysql_user_password=zabbix
+
+# Web default login name and password
+name=admin
+password=zabbix
 
 #通用服务器账户密码
 ansible_connection=ssh
 ansible_ssh_user=root
-ansible_ssh_pass=<password>
+ansible_ssh_pass=admin
+

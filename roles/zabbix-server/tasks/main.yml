@@ -35,12 +35,23 @@
     encoding: utf8
     state: present
 
-- name: 授权
-  mysql_user:
-    name: zabbix
-    password: zabbix
-    priv: 'zabbix.*:ALL,GRANT'
-    state: present
+#- name: 授权
+#  mysql_user:
+#    name: {{ mysql_user_name }}
+#    password: {{ mysql_user_password }}
+#    priv: 'zabbix.*:ALL,GRANT'
+#    state: present
+
+- name: set permission on mysql_user_name
+  mysql_user: name={{ mysql_user_name }} password={{ mysql_user_password }} priv='*.*:ALL,GRANT' state=present host={{ item }}
+  with_items:
+   - "%"
+   - "localhost"
+   - "{{ ansible_default_ipv4.address }}"
+#   - "hostvars[inventory_hostname]['ansible_default_ipv4']['address']"
+  tags:
+    - auth
+
 
 - name: 解压数据库文件
   command: gzip -dr create.sql.gz
@@ -67,6 +78,10 @@
 
 - name: copy php.ini
   template: src=templates/php.ini.j2 dest=/etc/php.ini owner=root group=root mode=0644
+
+- name: set permission on zabbix_server.conf
+  shell: chown apache:apache /etc/zabbix/zabbix_server.conf
+
 
 - name: start server and agent
   service: name={{ item }} state=restarted enabled=True

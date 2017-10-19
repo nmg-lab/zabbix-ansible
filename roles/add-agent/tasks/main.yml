@@ -1,0 +1,32 @@
+---
+- name: Create a new host or update an existing host's info
+  local_action:
+    module: zabbix_host
+    server_url: http://10.12.16.161
+    login_user: admin
+    login_password: zabbix
+    host_name: zabbix-2
+#    visible_name: ExampleName
+#    host_groups:
+#      - Example group1
+#      - Example group2
+#    link_templates:
+#      - Example template1
+#      - Example template2
+    status: enabled
+    state: present
+    inventory_mode: automatic
+    interfaces:
+      - type: 1
+        main: 1
+        useip: 1
+        ip: 10.12.16.158
+        dns: ""
+        port: 10050
+#      - type: 4
+#        main: 1
+#        useip: 1
+#        ip: 10.xx.xx.xx
+#        dns: ""
+#        port: 12345
+    proxy: a.zabbix.proxy

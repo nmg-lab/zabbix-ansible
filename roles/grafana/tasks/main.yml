@@ -1,0 +1,21 @@
+---
+
+- name: copying grafana-4.5.2-1.x86_64.rpm to server node
+  copy: src=templates/grafana-4.5.2-1.x86_64.rpm dest=/root/ 
+
+- name: install Grafana 
+  command: yum localinstall grafana-4.5.2-1.x86_64.rpm -y
+  args: 
+    chdir: /root/
+
+- name: start grafana server
+  service: name=grafana-server state=restarted enabled=yes
+
+- name: Use the grafana-cli tool to install Zabbix from the commandline
+  shell: grafana-cli plugins install alexanderzobnin-zabbix-app
+  tags: zabbix-plugin
+
+- name: restart grafana server
+  service: name=grafana-server state=restarted enabled=yes
+
+
