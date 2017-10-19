@@ -15,6 +15,9 @@
   shell: grafana-cli plugins install alexanderzobnin-zabbix-app
   tags: zabbix-plugin
 
+- name: install grafana pie chart panel
+  shell: grafana-cli plugins install grafana-piechart-panel
+
 - name: restart grafana server
   service: name=grafana-server state=restarted enabled=yes
 
