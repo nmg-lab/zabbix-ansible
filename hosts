@@ -1,16 +1,19 @@
 #################服务器 IP地址################
 [server]
-10.12.16.161
+#10.12.16.161
 [zabbix]
-10.12.16.161
+#10.12.16.161
 
 ##############客户端agent IP地址##############
 [agent]
+10.0.1.11
+10.0.1.31
 #10.12.16.1[57:60]
-10.0.0.31
-10.0.0.32
-10.0.0.33
-
+#10.0.0.11
+#10.0.0.12
+#10.0.0.13
+#10.12.15.144  ansible_connection=ssh  ansible_ssh_user=root   ansible_ssh_pass=111111
+#10.12.15.90 ansible_connection=ssh  ansible_ssh_user=root   ansible_ssh_pass=111111
 ###################全局变量###################
 [all:vars]
 
@@ -26,5 +29,5 @@ password=zabbix
 #通用服务器账户密码
 ansible_connection=ssh
 ansible_ssh_user=root
-ansible_ssh_pass=admin
+ansible_ssh_pass=xsw21qaz
 
