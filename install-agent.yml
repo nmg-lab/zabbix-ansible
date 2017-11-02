@@ -1,5 +1,6 @@
 - hosts: agent
   user: root
   roles:
+    - snmp
     - zabbix-agent
 

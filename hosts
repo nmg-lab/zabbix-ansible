@@ -1,8 +1,8 @@
 #################服务器 IP地址################
 [server]
-#10.12.16.161
+10.12.15.152
 [zabbix]
-#10.12.16.161
+10.12.15.152
 
 ##############客户端agent IP地址##############
 [agent]
@@ -18,7 +18,7 @@
 [all:vars]
 
 #zabbix服务器IP地址
-zabbix_server_name = 10.12.16.161
+zabbix_server_name = 10.12.15.152
 mysql_user_name=zabbix
 mysql_user_password=zabbix
 
