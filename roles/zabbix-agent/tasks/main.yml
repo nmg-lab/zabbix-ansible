@@ -1,9 +1,15 @@
 ---
 #单独安装agent
-- name: 配置源
-  yum: name={{ item }} state=present
-  with_items:
-   - http://repo.zabbix.com/zabbix/3.4/rhel/7/x86_64/zabbix-release-3.4-1.el7.centos.noarch.rpm 
+#- name: 配置源
+#  yum: name={{ item }} state=present
+#  with_items:
+#   - http://repo.zabbix.com/zabbix/3.4/rhel/7/x86_64/zabbix-release-3.4-1.el7.centos.noarch.rpm 
+
+- name: copy zabbix.repo
+  template: src=templates/zabbix.repo.j2 dest=/etc/yum.repos.d/zabbix.repo owner=root group=root mode=0644
+
+- name: copy epel.repo
+  template: src=templates/epel-7.repo.j2 dest=/etc/yum.repos.d/epel-7.repo owner=root group=root mode=0644
 
 - name: 安装
   yum: name={{ item }} state=present
